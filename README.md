@@ -15,3 +15,9 @@ long-term deposit also waste time as well. Besides, this strategy makes the cust
 want to subscribe to our product. To overcome with the campaign cost waste and customers' complaint, it is needed a prediction on how many
 customers are more likely to subscribe the deposit so we can calculate the campaign cost from the prediction.
 
+## Objectives
+To achieve the effiency of the telemarketing cost, we need to predict deposit subscription on our customers based on the available data. 
+From the prediction, we can calculate the telemarketing cost before we do prediction and after the prediction.
+
+## Dataset
+The dataset is obtained from [this dataset](https://drive.google.com/file/d/1PQTTWgITANg5Av-1Ot28KCIHVyFaCmUK/view) about direct marketing campaigns of a Portuguese banking institution and based from [[1]](https://www.kaggle.com/datasets/janiobachmann/bank-marketing-dataset). In further analysis and modeling, the currency of this dataset will be explained in EUR.
