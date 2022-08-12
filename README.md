@@ -47,3 +47,36 @@ In this case, the marketing team knows that [[2]](https://github.com/goncaloggom
 - For each customer predicted not subscribed to our deposit but actually they subscribe, the bank will cost 500 EUR
 
 Both cases have the consquence of wasting money and our goal will not be achieved. However, the consequences of False Positive will costly more. So, we will calculate those cases based on our prediction through confusion matrix from each model and try to reduce the FP numbers as low as possible in order to make the marketing cost more efficient (cheaper).
+
+## Metrics Evaluation
+
+There are two metrics in this case
+
+1. ROC-AUC score: used to determine whether a model is good or not to distinguish positive class and negative class
+2. Cost Reduction: used to determine a model is able to make the efficient cost. The higher cost reduction, the better performance model to make the efficient cost.
+
+## Feature Description
+
+**Bank client data:**
+
+1. age: (numeric)
+2. job: type of job (categorical: 'admin.','blue-collar','entrepreneur','housemaid','management','retired','self-employed','services','student','technician','unemployed','unknown')
+3. housing: has housing loan? (categorical: 'no','yes','unknown')
+4. loan: has personal loan? (categorical: 'no','yes','unknown')
+5. balance: Balance of the individual.
+
+**Related with the last contact of the current campaign:**
+
+6. contact: contact communication type (categorical: 'cellular','telephone','unknown')
+7. month: last contact month of year (categorical: 'jan', 'feb', 'mar', ..., 'nov', 'dec')
+
+**Other attributes:**
+
+8. campaign: number of contacts performed during this campaign and for this client (numeric, includes last contact)
+9. pdays: number of days that passed by after the client was last contacted from a previous campaign (numeric; -1 means client was not previously contacted))
+10. poutcome: outcome of the previous marketing campaign (categorical: 'failure','nonexistent','success')
+
+**Output variable (desired target):**
+
+11. deposit : as the client subscribed a term deposit? (binary: 'yes','no')
+
