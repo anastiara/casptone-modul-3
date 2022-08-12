@@ -80,3 +80,15 @@ There are two metrics in this case
 
 11. deposit : as the client subscribed a term deposit? (binary: 'yes','no')
 
+## EDA Insights
+1. From our cleaned dataset, now our `age` customers range from 18-95 years old and customers' `balance` range from 0-4017 EUR.
+2. Our customers tend to deposit if they are contacted only once, if we contact them more than once, they possibly will not subscribe to our deposit product. Also, if they are never contacted before (based on `pdays` feature), they also tend to subscribe.
+3. Most customers who subscribe the deposit products whose jobs are management, student, and retired. We should expand our approach to student and retired customers because we have too much approached on management customers. 
+4. The optimal months to contact our customers are in Febrary, April, September, October, and December.
+5. Most of our customers who subscribe to our deposit product are the ones who don't have housing loan and personal loan.
+6. Customers whose poutcome status is success also will subscribe to our deposit product.
+7. Contact feature doesn't give any insights about our customers' subscription. However, we will keep this feature for modeling process
+8. `campaign` feature will not be used from modeling because this feature is not obtained before campaign
+9. Our data is balanced. So for the modeling we don't have to do data balancing.
+
+## Modeling
