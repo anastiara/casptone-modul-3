@@ -1,4 +1,4 @@
-# Bank Marketing Cmapaign
+# Bank Marketing Campaign 🏦💶☎️📊 
 by Anastiara Adina Restu - JCDS 1702 002
 
 ## Problem Statement
