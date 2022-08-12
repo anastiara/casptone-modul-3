@@ -145,8 +145,6 @@ From our observation above, we know that customers where considered subscribed t
 - the cost difference by model is 737.68 EUR average savings per customer
 - Cost Reduction from the cost without model is 70.82%
 
-
-
 ### AdaBoost
 - Best Parameters:{'scaler': StandardScaler(), 'method__n_estimators': 96, 'method__learning_rate': 0.1}
 - Best train ROC AUC score: 0.7321735490156287
@@ -162,9 +160,6 @@ From our observation above, we know that customers where considered subscribed t
 - Marketing cost predicted by model : 276.72 EUR Average per customer
 - the cost difference by model is  764.97 EUR average savings per customer
 - Cost Reduction from the cost without model is 73.44%
-
-### ROC-AUC
-![ROC-AUC Curves](https://github.com/anastiara/casptone-modul-3/blob/main/Images/ROCAUC.png)
 
 ### Final Results
 ![Final Result](https://github.com/anastiara/casptone-modul-3/blob/main/Images/final.png)
