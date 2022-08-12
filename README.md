@@ -92,3 +92,107 @@ There are two metrics in this case
 9. Our data is balanced. So for the modeling we don't have to do data balancing.
 
 ## Modeling
+In this part, we will do our modeling for the dataset. The steps are:
+- Data Preprocessing
+    - Data splitting (train and test set)
+    - Data Encoding and Scaling
+- Modeling
+    - Cross Validation of Benchmark Models
+    - Predict to Test Set
+    - Choose Best 3 models based on the performance score (accuracy and ROC AUC)
+    - Hyperparameter Tuning the 3 models
+    - Predict to Test set and calculate the marketing cost
+- Choose the best model with the lowest marketing cost
+- Recommendation
+
+### Data Preprocessing
+*Data Splitting: Splitting Dataset into training set (80%) and test set (20%)
+*Data Encoding and Scaling: 
+  * OneHotEncoder = `loan`, `housing`,`contact`,`poutcome`. This is done  because the unique values of these features are only 2-3 values. So, it will be more effiecient if I encode these features with OneHotEncoder
+  *  BinaryEncoder = `job`,`month`. This is done because their unique vales are more than 3 values. Eventough this feature will hard to explain, but at least it will make the computation faster.
+  * StandardScaler = This scaling feature is used to scale the numeric features. This scaler standardizes a feature by substracting the mean and then scaling to unit variance. The feature `age` and `balance` will be scaled by this.
+
+### Define Benchmark Model
+To obtain the best model, we will compare these classification models to know what model perform the best. There are KNN, Logistic Regression, Decision Tree, Random Forest, Ada Boost, Gradient Boost, and XGB.
+
+*Cross Validation Result
+
+Cross Validation is performed to avoid overfitting of a model and determine what models have good performances based on the mean and standard value. Cross Validation is a resampling method that uses different portions of the data to test and train a model on different iterations.
+
+![Training Benchmark Model](https://github.com/anastiara/casptone-modul-3/blob/main/Images/Screenshot%202022-08-12%20202446.png)
+![Testing Benchmark Model](https://github.com/anastiara/casptone-modul-3/blob/main/Images/Screenshot%202022-08-12%20202503.png)
+
+From the benchkmark model performance score, we have our top models based on ROC-AUC score and precision score: Random Forest, Gradient Boost and Ada Boost. Therefore, we are going to choose Ranfom Forest, Gradient Boost and Ada Boost to enhance their performance by tuning then we also calculate the cost based on FP and FN score.
+
+## Marketing Cost Calculation
+Before we are doing hyperparameter tuning and predict to the new tuned models, we need to calculate the marketing cost if no model applied to the case. To do that, we simulate two cases: 
+- if customers where considered subscribed to the deposit product but actually don't subscribe to the deposit product
+- if customers where considered not subscribed to the deposit product but actually subscribe to the deposit product
+
+Then, we calculate the cost of FP and FN based the information mentioned and compare which total cost will more costly. We want to prove that our stance about the first case will more costly. To do this, we combine the calculation from [[2]](https://github.com/goncaloggomes/cost-prediction/blob/master/ML_fullproject_bankmktcampaign.ipynb) and [[3]](https://www.kdnuggets.com/2018/10/confusion-matrices-quantify-cost-being-wrong.html) and modify them based on our dataset.
+
+- if customers where considered subscribed to the deposit product but actually don't subscribe to the deposit product will cost 1041.7 EUR
+- if customers where considered not subscribed to the deposit product but actually subscribe to the deposit product wiil cost 239.58n EUR
+
+From our observation above, we know that customers where considered subscribed to the deposit product but actually don't subscribe to the deposit product will more expensive. It proves our problem statement. Next step is we will look for the models who can lower the False Positive numbers so that we can find the most efficient marketing cost.
+
+## Hyperparameter Tuning
+### Random Forest
+- Best Parameters:{'scaler': StandardScaler(), 'method__n_estimators': 200, 'method__min_samples_split': 10, 'method__min_samples_leaf': 4, 'method__max_depth': 60, 'method__bootstrap': True}
+- Best train ROC AUC score: 0.7547888602402649
+- Best test ROC AUC score : 0.7437538002321596
+- Marketing cost predicted by model : 304.02 EUR Average per customer
+- the cost difference by model is 737.68 EUR average savings per customer
+- Cost Reduction from the cost without model is 70.82%
+
+
+
+### AdaBoost
+- Best Parameters:{'scaler': StandardScaler(), 'method__n_estimators': 96, 'method__learning_rate': 0.1}
+- Best train ROC AUC score: 0.7321735490156287
+- Best test ROC AUC score : 0.72823733716581
+- Marketing cost predicted by model : 306.29 EUR Average per customer
+- the cost difference by model is  735.41 EUR average savings per customer
+- Cost Reduction from the cost without model is 70.6%
+
+### Gradient Boost
+- Best Parameters:{'scaler': StandardScaler(), 'method__n_estimators': 400, 'method__min_samples_split': 200, 'method__min_samples_leaf': 70, 'method__max_depth': 11, 'method__learning_rate': 0.01}
+- Best train ROC AUC score: 0.7511258979354815
+- Best test ROC AUC score : 0.7391820057855656
+- Marketing cost predicted by model : 276.72 EUR Average per customer
+- the cost difference by model is  764.97 EUR average savings per customer
+- Cost Reduction from the cost without model is 73.44%
+
+### ROC-AUC
+![ROC-AUC Curves](https://github.com/anastiara/casptone-modul-3/blob/main/Images/ROCAUC.png)
+
+### Final Results
+![Final Result](https://github.com/anastiara/casptone-modul-3/blob/main/Images/final.png)
+
+From the hyperparameter tuning and prediction of marketing cost calculation above, we got Gradient Boost as our best model to predict the cost effieciency. Gradient Boost shows that its total cost is the lowest with the highest cost saving. It seems like best ROC-AUC score is Random Forest model, but the cost calculation from the model is not as good as Gradient Boost. In this case, we try to lower the FP numbers and we know that it is better to use Precision as our metrics. We get the best score but since our data is quite balanced, we are not sure that using precision as main metrics will be good enough. To overcome with this, we only care about the confusion matrix that each model produces and our main goal of doing prediction is to lower the FP number.
+
+We use ROC-AUC metrics to only see how good our models to distinguish between positive and negative classes. Based on this [source](https://github.com/goncaloggomes/cost-prediction/blob/master/ML_fullproject_bankmktcampaign.ipynb), with the academic scoring system as
+
+- 0.9 - 1 = excellent (A)
+- 0.8 - 0.9 = Good (B)
+- 0.7 - 0.8 = reasonable (C)
+- 0.6 - 0.7 = weak (D)
+- 0.5 - 0.6 = terrible (E)
+
+Overall, our models' ROC-AUC score are at reasonable level, meaning that our models can classify the positive classes and negative classes.
+
+### Feature Importances
+
+## Conclusion and Recommendation
+*Marketing Cost Efficiency
+
+Based on our modeling, we have compared Gradient boost and Ada Boost models. Our goal here is to reduce FP number since its consequence is costly to the bank. So, we compared the models also with the confusion matrix to obtain the FP and FN results based on the models. The results show that Gradient Boost is the best performance with this dataset because it has the lowest total marketing cost (276.62 EUR) and highest saving cost (764.97 EUR) from the baseline total cost 1401.7 EUR.
+
+*Recommendation
+
+Things that should be prioritized by the bank:
+- Target the deposit product to wider prospective customers such as students and retired customers, since the marketing team doesn't contact them much. If we still approach management customers, the chance of not getting new subscribers is higher because from our dataset, the difference between no deposit vs deposit of management customers is relatively small.
+- Based on our data, the customers who don't have housing loan and with relatively high balance also will tend to subscribe to our deposit product.
+- The campaign might be better in February, April, September, October,and December since the in those month we can get many customers to subscribe the deposit product.
+- The customers that have high balance and the the poutcome is success will tend to subscribe the deposit
+- Having a questionnaire after contacting the customers is a good way to know our customers so that we can get better insights about our customers and better prediction.
