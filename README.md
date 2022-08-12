@@ -1,4 +1,4 @@
-# Bank Marketing
+# Bank Marketing Cmapaign
 by Anastiara Adina Restu - JCDS 1702 002
 
 ## Problem Statement
@@ -29,7 +29,7 @@ Before we do our modeling, we need to do data cleaning followed by EDA (explanat
 ### Marketing Cost Calculation
 To be able understand our prediction, we can use confusion matrix to explain the customers' category
 
-![](https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.dataschool.io%2Fcontent%2Fimages%2F2015%2F01%2Fconfusion_matrix2.png&imgrefurl=https%3A%2F%2Fwww.dataschool.io%2Fsimple-guide-to-confusion-matrix-terminology%2F&tbnid=ZH8M9hQ__uqDXM&vet=12ahUKEwj0xpPCqcH5AhVMNLcAHQ1XDtAQMygDegUIARDfAQ..i&docid=j5uYZDebx1HmNM&w=487&h=278&q=confusion%20matrix&ved=2ahUKEwj0xpPCqcH5AhVMNLcAHQ1XDtAQMygDegUIARDfAQ)
+![](https://github.com/anastiara/casptone-modul-3/blob/main/Images/2022-08-08-20-25-29.png)
 
 TARGET :
 - Positive class : 'yes' for subscribe deposit
